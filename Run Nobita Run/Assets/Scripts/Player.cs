@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private CharacterController controller;
+    public SpawnManager spawnManager;
     private Vector3 direction;
     public float moveSpeed;
     public Animator animator;
@@ -24,21 +25,23 @@ public class Player : MonoBehaviour
     void Update()
     {
         direction.z = moveSpeed;
-
         direction.y += Gravity * Time.deltaTime;
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
+        
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
             Jump();
-        }
-        else if(Input.GetKeyDown(KeyCode.A))
+            }
+        
+
+
+        if(Input.GetKeyDown(KeyCode.A))
         {
             desiredLane++;
             if(desiredLane==3)
                desiredLane = 2;
         }
 
-        else if(Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKeyDown(KeyCode.D))
         {
             desiredLane--;
             if(desiredLane==-1)
@@ -66,5 +69,10 @@ public class Player : MonoBehaviour
     {
         direction.y = jumpForce;
         animator.SetTrigger("jump");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        spawnManager.SpawnTriggerEntered();
     }
 }
