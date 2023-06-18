@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Animator animator;
 
     private int desiredLane = 1;
-    public float laneDistance = 4f;
+    public float laneDistance = 0.1f;
 
     public float jumpForce;
     public float Gravity = -20;
@@ -34,14 +34,14 @@ public class Player : MonoBehaviour
         
 
 
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
             desiredLane++;
             if(desiredLane==3)
                desiredLane = 2;
         }
 
-        if(Input.GetKeyDown(KeyCode.D))
+        if(Input.GetKeyDown(KeyCode.RightArrow))
         {
             desiredLane--;
             if(desiredLane==-1)
@@ -49,13 +49,15 @@ public class Player : MonoBehaviour
         }
 
         Vector3 targetPosition = transform.position.z *transform.forward + transform.position.y * transform.up;
+        /*float hMove = Input.GetAxis("Horizontal") * moveSpeed / 2;
+        transform.Translate(new Vector3(hMove, 0, 0) * Time.deltaTime);*/
         if(desiredLane == 0)
         {
             targetPosition += Vector3.left * laneDistance;
         }else if(desiredLane == 2){
             targetPosition += Vector3.right * laneDistance;
         }
-        transform.position = Vector3.Lerp(transform.position, targetPosition, 80 * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, 70 * Time.deltaTime);
     }
 
     // Update is called once per frame
@@ -74,5 +76,13 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         spawnManager.SpawnTriggerEntered();
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if(hit.transform.tag == "Obstacle")
+        {
+            GameOver.gameOver = true;
+        }
     }
 }
