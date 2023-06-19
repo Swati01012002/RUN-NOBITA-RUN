@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public Animator animator;
 
-    public float minX = -1f; // The minimum X position of the platform
-    public float maxX = 1f; // The maximum X position of the platform
+    //public float minX = -1f; // The minimum X position of the platform
+    //public float maxX = 1f; // The maximum X position of the platform
 
     //private int desiredLane = 1;
     //public float laneDistance = 0.5f;
@@ -40,11 +40,11 @@ public class Player : MonoBehaviour
 
         if (SwipeManager.swipeLeft)
         {
-            horizontalInput = -0.6f; // Move left when 'A' key is pressed
+            horizontalInput = -0.8f; // Move left when 'A' key is pressed
         }
         else if (SwipeManager.swipeRight)
         {
-            horizontalInput = 0.6f; // Move right when 'D' key is pressed
+            horizontalInput = 0.8f; // Move right when 'D' key is pressed
         }
         Vector3 moveDirection = new Vector3(horizontalInput, 0f, 0f); // Create a movement vector based on the input
 
@@ -53,9 +53,9 @@ public class Player : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime);
 
         // Clamp the character's position within the specified range
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
-        transform.position = clampedPosition;
+        //Vector3 clampedPosition = transform.position;
+        //clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
+        //transform.position = clampedPosition;
 
        /* if(SwipeManager.swipeRight)
         {

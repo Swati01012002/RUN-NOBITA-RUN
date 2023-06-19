@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
     public static bool gameOver;
     public GameObject gameOverPanel;
+    public GameObject pauseMenuScreen;
 
     public static int numberOfCoins;
     public TextMeshProUGUI coins;
@@ -28,5 +30,22 @@ public class GameOver : MonoBehaviour
             gameOverPanel.SetActive(true);
         }
         coins.text = "COINS :" + numberOfCoins;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        pauseMenuScreen.SetActive(true);
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        pauseMenuScreen.SetActive(false);
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("Start");
     }
 }
