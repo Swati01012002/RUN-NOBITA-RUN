@@ -10,8 +10,11 @@ public class Player : MonoBehaviour
     public float moveSpeed;
     public Animator animator;
 
-    private int desiredLane = 1;
-    public float laneDistance = 0.1f;
+    public float minX = -1f; // The minimum X position of the platform
+    public float maxX = 1f; // The maximum X position of the platform
+
+    //private int desiredLane = 1;
+    //public float laneDistance = 0.5f;
 
     public float jumpForce;
     public float Gravity = -20;
@@ -27,21 +30,41 @@ public class Player : MonoBehaviour
         direction.z = moveSpeed;
         direction.y += Gravity * Time.deltaTime;
         
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(SwipeManager.swipeUp)
             {
             Jump();
             }
         
+        
+        float horizontalInput = 0f;
 
+        if (SwipeManager.swipeLeft)
+        {
+            horizontalInput = -0.6f; // Move left when 'A' key is pressed
+        }
+        else if (SwipeManager.swipeRight)
+        {
+            horizontalInput = 0.6f; // Move right when 'D' key is pressed
+        }
+        Vector3 moveDirection = new Vector3(horizontalInput, 0f, 0f); // Create a movement vector based on the input
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        moveDirection *= moveSpeed / 2; // Apply the movement speed to the direction vector
+
+        controller.Move(moveDirection * Time.deltaTime);
+
+        // Clamp the character's position within the specified range
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.x = Mathf.Clamp(clampedPosition.x, minX, maxX);
+        transform.position = clampedPosition;
+
+       /* if(SwipeManager.swipeRight)
         {
             desiredLane++;
             if(desiredLane==3)
                desiredLane = 2;
         }
 
-        if(Input.GetKeyDown(KeyCode.RightArrow))
+        if(SwipeManager.swipeLeft)
         {
             desiredLane--;
             if(desiredLane==-1)
@@ -49,15 +72,14 @@ public class Player : MonoBehaviour
         }
 
         Vector3 targetPosition = transform.position.z *transform.forward + transform.position.y * transform.up;
-        /*float hMove = Input.GetAxis("Horizontal") * moveSpeed / 2;
-        transform.Translate(new Vector3(hMove, 0, 0) * Time.deltaTime);*/
+        
         if(desiredLane == 0)
         {
             targetPosition += Vector3.left * laneDistance;
         }else if(desiredLane == 2){
             targetPosition += Vector3.right * laneDistance;
         }
-        transform.position = Vector3.Lerp(transform.position, targetPosition, 70 * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, 70 * Time.deltaTime);*/
     }
 
     // Update is called once per frame
