@@ -105,6 +105,7 @@ public class Player : MonoBehaviour
         if(hit.transform.tag == "Obstacle")
         {
             GameOver.gameOver = true;
+            FindObjectOfType<AudioManager>().PlaySound("Game Over");
         }
     }
 }

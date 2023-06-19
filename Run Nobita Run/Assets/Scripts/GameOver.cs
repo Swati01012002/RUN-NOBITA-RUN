@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameOver : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class GameOver : MonoBehaviour
     public GameObject gameOverPanel;
 
     public static int numberOfCoins;
+    public TextMeshProUGUI coins;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,5 +27,6 @@ public class GameOver : MonoBehaviour
             Time.timeScale = 0;
             gameOverPanel.SetActive(true);
         }
+        coins.text = "COINS :" + numberOfCoins;
     }
 }
