@@ -40,11 +40,11 @@ public class Player : MonoBehaviour
 
         if (SwipeManager.swipeLeft)
         {
-            horizontalInput = -15f; // Move left when 'A' key is pressed
+            horizontalInput = -6f; // Move left when 'A' key is pressed
         }
         else if (SwipeManager.swipeRight)
         {
-            horizontalInput = 15f; // Move right when 'D' key is pressed
+            horizontalInput = 6f; // Move right when 'D' key is pressed
         }
         Vector3 moveDirection = new Vector3(horizontalInput, 0f, 0f); // Create a movement vector based on the input
 
